@@ -2,6 +2,10 @@
 
 Este é um exemplo de aplicação Express criada com o express-generator que demonstra como integrar com a API do Old Dragon usando OAuth 2.0.
 
+Você pode acessar esta aplicação indo em [olddragon-api-nodejs-demo.fly.dev](https://olddragon-api-nodejs-demo.fly.dev)
+
+E você mesmo pode fazer _fork_ deste projeto e adaptá-lo para sua própria aplicação, fazendo deploy você mesmo.
+
 ## Funcionalidades
 
 - Autenticação OAuth 2.0 com PKCE
