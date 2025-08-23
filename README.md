@@ -1,11 +1,61 @@
-# hello-fly
+# Exemplo de Integração com a API do Old Dragon (Express Generator)
 
-This is our Hello World Fly.io application. Try it out now:
+Este é um exemplo de aplicação Express criada com o express-generator que demonstra como integrar com a API do Old Dragon usando OAuth 2.0.
+
+## Funcionalidades
+
+- Autenticação OAuth 2.0 com PKCE
+- Integração com a API do Old Dragon
+- Interface usando EJS templates
+- Exemplo de busca de campanhas do usuário
+
+## Requisitos
+
+- Node.js 24 ou superior
+- Conta no Old Dragon (olddragon.com.br)
+- Client ID e Client Secret da aplicação OAuth
+
+## Configuração
+
+1. Clone este projeto
+2. Instale as dependências: `npm install`
+3. Configure as variáveis de ambiente:
+
+```bash
+export CLIENT_ID="seu_client_id"
+export CLIENT_SECRET="seu_client_secret"
+export SESSION_SECRET="sua_chave_secreta_sessao"
+export CALLBACK_URL="https://seu-app.fly.dev/callback"
+```
+
+4. Execute: `npm start`
+5. Acesse: http://localhost:3000
+
+## Deploy no Fly.io
 
 ```sh
-git clone https://github.com/fly-apps/hello-fly.git
-
-cd hello-fly
-
-fly launch --now
+fly launch
+fly secrets set CLIENT_ID="seu_client_id"
+fly secrets set CLIENT_SECRET="seu_client_secret"
+fly secrets set SESSION_SECRET="sua_chave_secreta_sessao"
+fly secrets set CALLBACK_URL="https://seu-app.fly.dev/callback"
+fly deploy
 ```
+
+## Variáveis de Ambiente
+
+- `CLIENT_ID`: ID da aplicação OAuth do Old Dragon
+- `CLIENT_SECRET`: Secret da aplicação OAuth do Old Dragon
+- `SESSION_SECRET`: Chave secreta para sessões
+- `CALLBACK_URL`: URL de callback OAuth (ex: http://localhost:3000/callback)
+
+## Como obter credenciais OAuth
+
+Siga as instruções em [github.com/burobrasil/olddragon-api](https://github.com/burobrasil/olddragon-api)
+
+## Estrutura
+
+- `app.js`: Configuração principal do Express com OAuth
+- `routes/index.js`: Rotas principais incluindo login/callback
+- `views/`: Templates EJS
+- `bin/www`: Script de inicialização do servidor

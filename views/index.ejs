@@ -3,9 +3,17 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simpledotcss/2.3.7/simple.min.css" integrity="sha512-taVA0VISClRMNshgWnlrG4lcEYSjwpgpI8vaoT0zGoPf9c74DA95SXMngcgjaWTrEsUbKmfKqmQ7toiXNc2l+A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <p>Exemplo de integração com a API do Old Dragon usando OAuth 2.0</p>
+
+    <% if (typeof user !== 'undefined' && user) { %>
+      <p>Usuário autenticado!</p>
+      <a href="/logout">Logout</a>
+    <% } else { %>
+      <a href="/login">Login com Old Dragon</a>
+    <% } %>
   </body>
 </html>
