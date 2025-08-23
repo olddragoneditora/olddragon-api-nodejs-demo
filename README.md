@@ -37,8 +37,8 @@ export CALLBACK_URL="https://seu-app.fly.dev/callback"
 fly launch
 fly secrets set CLIENT_ID="seu_client_id"
 fly secrets set CLIENT_SECRET="seu_client_secret"
-fly secrets set SESSION_SECRET="sua_chave_secreta_sessao"
 fly secrets set CALLBACK_URL="https://seu-app.fly.dev/callback"
+fly secrets set SESSION_SECRET="invente_uma_chave_secreta_aleatoria_aqui"
 fly deploy
 ```
 
