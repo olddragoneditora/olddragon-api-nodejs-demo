@@ -55,7 +55,7 @@ fly deploy
 
 ## Como obter credenciais OAuth
 
-Siga as instruções em [github.com/burobrasil/olddragon-api](https://github.com/burobrasil/olddragon-api)
+Siga as instruções em [github.com/olddragoneditora/olddragon-api](https://github.com/olddragoneditora/olddragon-api)
 
 ## Estrutura
 
