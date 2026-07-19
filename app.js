@@ -13,6 +13,12 @@ var { OLDDRAGON_BASE_URL } = require('./lib/oldDragonApi');
 
 var app = express();
 
+// Fly.io terminates TLS at its edge and forwards plain HTTP internally, so
+// Express must trust the X-Forwarded-Proto header to know the original
+// request was HTTPS -- required for secure session cookies (see below) to
+// ever get set in production.
+app.set('trust proxy', 1);
+
 passport.use(
   "oauth2",
   new OAuth2Strategy(
@@ -49,7 +55,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Session configuration
+// Session configuration. Uses the default in-memory store: fine for this
+// single-machine teaching demo (short-lived OAuth tokens, not sensitive user
+// data), but not a pattern to copy for a real multi-instance deployment --
+// swap in a persistent store (Redis, Postgres, ...) there instead.
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "your-session-secret-change-this",
