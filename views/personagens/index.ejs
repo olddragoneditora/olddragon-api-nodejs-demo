@@ -33,10 +33,10 @@
             <tr>
               <td><a href="/personagens/<%= personagem.id %>"><%= personagem.name %></a></td>
               <td><%= personagem.level %></td>
-              <td><%= personagem.character_class.name %></td>
-              <td><%= personagem.character_race.name %></td>
-              <td><%= personagem.campaign ? personagem.campaign.name : '-' %></td>
-              <td><%= personagem.health_points %> / <%= personagem.max_hp %></td>
+              <td><%= personagem.character_class?.name ?? "-" %></td>
+              <td><%= personagem.character_race?.name ?? "-" %></td>
+              <td><%= personagem.campaign?.name ?? "-" %></td>
+              <td><%= personagem.max_hp != null ? `${personagem.health_points} / ${personagem.max_hp}` : "-" %></td>
             </tr>
           <% }) %>
         </tbody>

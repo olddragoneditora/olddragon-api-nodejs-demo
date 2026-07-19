@@ -18,12 +18,12 @@
 
     <ul>
       <li>Nível / Level: <strong><%= personagem.level %></strong></li>
-      <li>Classe / Class: <strong><%= personagem.character_class.name %></strong></li>
-      <li>Raça / Race: <strong><%= personagem.character_race.name %></strong></li>
-      <li>Campanha / Campaign: <strong><%= personagem.campaign ? personagem.campaign.name : '-' %></strong></li>
-      <li>Classe de Armadura / Armor Class (CA): <strong><%= personagem.ac %></strong></li>
-      <li>Experiência / Experience (XP): <strong><%= personagem.experience_points %></strong></li>
-      <li>PV atual / total (HP current / max): <strong><%= personagem.health_points %> / <%= personagem.max_hp %></strong></li>
+      <li>Classe / Class: <strong><%= personagem.character_class?.name ?? "-" %></strong></li>
+      <li>Raça / Race: <strong><%= personagem.character_race?.name ?? "-" %></strong></li>
+      <li>Campanha / Campaign: <strong><%= personagem.campaign?.name ?? "-" %></strong></li>
+      <li>Classe de Armadura / Armor Class (CA): <strong><%= personagem.ac ?? "-" %></strong></li>
+      <li>Experiência / Experience (XP): <strong><%= personagem.experience_points ?? "-" %></strong></li>
+      <li>PV atual / total (HP current / max): <strong><%= personagem.max_hp != null ? `${personagem.health_points} / ${personagem.max_hp}` : "-" %></strong></li>
     </ul>
 
     <% if (pvSuccess) { %>
@@ -33,6 +33,7 @@
       <p class="notice notice-error"><%= pvError %></p>
     <% } %>
 
+    <% if (personagem.max_hp != null) { %>
     <h2>Atualizar PV / Update HP</h2>
     <p>
       Envia um <code>PATCH /personagens/<%= personagem.id %>.json</code> para a API (requer o escopo <code>content.write</code>).<br>
@@ -43,5 +44,8 @@
       <input type="number" id="health_points" name="health_points" min="0" max="<%= personagem.max_hp %>" value="<%= personagem.health_points %>" required>
       <button type="submit">Atualizar / Update</button>
     </form>
+    <% } else { %>
+      <p class="notice">Personagem ainda em criação — sem PV para atualizar. / Character still being created — no HP to update yet.</p>
+    <% } %>
   </body>
 </html>
