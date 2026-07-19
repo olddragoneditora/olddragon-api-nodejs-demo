@@ -10,15 +10,14 @@
 
     <h1><%= title %></h1>
     <p>
-      Exemplo de integração com a API do Old Dragon usando OAuth 2.0 (login, personagens, campanhas).<br>
-      Example integration with the Old Dragon API using OAuth 2.0 (login, characters, campaigns).
+      Exemplo de integração com a API do Old Dragon usando OAuth 2.0 (login, personagens, campanhas).
     </p>
 
     <% if (typeof user !== 'undefined' && user) { %>
-      <p>Usuário autenticado! / You're logged in!</p>
-      <p><a href="/personagens">Ver meus personagens / See my characters</a></p>
+      <p>Usuário autenticado!</p>
+      <p><a href="/personagens">Ver meus personagens</a></p>
     <% } else { %>
-      <a href="/login">Login com Old Dragon / Login with Old Dragon</a>
+      <a href="/login">Entrar com Old Dragon</a>
     <% } %>
   </body>
 </html>
