@@ -18,3 +18,8 @@ a {
   background: #f8d7da;
   color: #721c24;
 }
+
+.lang-note {
+  font-size: 12px;
+  opacity: 0.7;
+}

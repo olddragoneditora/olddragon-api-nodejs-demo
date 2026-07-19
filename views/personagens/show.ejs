@@ -8,44 +8,42 @@
   <body>
     <%- include('../partials/nav', { user }) %>
 
-    <p><a href="/personagens">&larr; Personagens / Characters</a></p>
+    <p><a href="/personagens">&larr; Personagens</a></p>
 
     <h1><%= personagem.name %></h1>
     <p>
-      Detalhe do personagem (<code>GET /personagens/<%= personagem.id %>.json</code>).<br>
-      Character detail (<code>GET /personagens/<%= personagem.id %>.json</code>).
+      Detalhe do personagem (<code>GET /personagens/<%= personagem.id %>.json</code>).
     </p>
 
     <ul>
-      <li>Nível / Level: <strong><%= personagem.level %></strong></li>
-      <li>Classe / Class: <strong><%= personagem.character_class?.name ?? "-" %></strong></li>
-      <li>Raça / Race: <strong><%= personagem.character_race?.name ?? "-" %></strong></li>
-      <li>Campanha / Campaign: <strong><%= personagem.campaign?.name ?? "-" %></strong></li>
-      <li>Classe de Armadura / Armor Class (CA): <strong><%= personagem.ac ?? "-" %></strong></li>
-      <li>Experiência / Experience (XP): <strong><%= personagem.experience_points ?? "-" %></strong></li>
-      <li>PV atual / total (HP current / max): <strong><%= personagem.max_hp != null ? `${personagem.health_points} / ${personagem.max_hp}` : "-" %></strong></li>
+      <li>Nível: <strong><%= personagem.level %></strong></li>
+      <li>Classe: <strong><%= personagem.character_class?.name ?? "-" %></strong></li>
+      <li>Raça: <strong><%= personagem.character_race?.name ?? "-" %></strong></li>
+      <li>Campanha: <strong><%= personagem.campaign?.name ?? "-" %></strong></li>
+      <li>Classe de Armadura (CA): <strong><%= personagem.ac ?? "-" %></strong></li>
+      <li>Experiência (XP): <strong><%= personagem.experience_points ?? "-" %></strong></li>
+      <li>PV atual / total: <strong><%= personagem.max_hp != null ? `${personagem.health_points} / ${personagem.max_hp}` : "-" %></strong></li>
     </ul>
 
     <% if (pvSuccess) { %>
-      <p class="notice">PV atualizado com sucesso! / HP updated successfully!</p>
+      <p class="notice">PV atualizado com sucesso!</p>
     <% } %>
     <% if (pvError) { %>
       <p class="notice notice-error"><%= pvError %></p>
     <% } %>
 
     <% if (personagem.max_hp != null) { %>
-    <h2>Atualizar PV / Update HP</h2>
+    <h2>Atualizar PV</h2>
     <p>
-      Envia um <code>PATCH /personagens/<%= personagem.id %>.json</code> para a API (requer o escopo <code>content.write</code>).<br>
-      Sends a <code>PATCH /personagens/<%= personagem.id %>.json</code> to the API (requires the <code>content.write</code> scope).
+      Envia um <code>PATCH /personagens/<%= personagem.id %>.json</code> para a API (requer o escopo <code>content.write</code>).
     </p>
     <form method="POST" action="/personagens/<%= personagem.id %>/pv">
-      <label for="health_points">PV atual / Current HP (0-<%= personagem.max_hp %>)</label>
+      <label for="health_points">PV atual (0-<%= personagem.max_hp %>)</label>
       <input type="number" id="health_points" name="health_points" min="0" max="<%= personagem.max_hp %>" value="<%= personagem.health_points %>" required>
-      <button type="submit">Atualizar / Update</button>
+      <button type="submit">Atualizar</button>
     </form>
     <% } else { %>
-      <p class="notice">Personagem ainda em criação — sem PV para atualizar. / Character still being created — no HP to update yet.</p>
+      <p class="notice">Personagem ainda em criação — sem PV para atualizar.</p>
     <% } %>
   </body>
 </html>

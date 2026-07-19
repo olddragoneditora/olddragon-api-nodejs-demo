@@ -8,24 +8,23 @@
   <body>
     <%- include('../partials/nav', { user }) %>
 
-    <h1>Personagens / Characters</h1>
+    <h1>Personagens</h1>
     <p>
-      Lista dos personagens do usuário autenticado (<code>GET /personagens.json</code>).<br>
-      List of the authenticated user's characters (<code>GET /personagens.json</code>).
+      Lista dos personagens do usuário autenticado (<code>GET /personagens.json</code>).
     </p>
 
     <% if (personagens.length === 0) { %>
-      <p>Nenhum personagem encontrado. / No characters found.</p>
+      <p>Nenhum personagem encontrado.</p>
     <% } else { %>
       <table>
         <thead>
           <tr>
-            <th>Nome / Name</th>
-            <th>Nível / Level</th>
-            <th>Classe / Class</th>
-            <th>Raça / Race</th>
-            <th>Campanha / Campaign</th>
-            <th>PV / HP</th>
+            <th>Nome</th>
+            <th>Nível</th>
+            <th>Classe</th>
+            <th>Raça</th>
+            <th>Campanha</th>
+            <th>PV</th>
           </tr>
         </thead>
         <tbody>

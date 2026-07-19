@@ -14,12 +14,12 @@ router.use(ensureAuthenticated);
 router.get('/', async function (req, res) {
   try {
     const response = await apiRequest(req, { method: 'get', url: `${OLDDRAGON_BASE_URL}/personagens.json` });
-    res.render('personagens/index', { title: 'Personagens / Characters', personagens: response.data, user: req.user });
+    res.render('personagens/index', { title: 'Personagens', personagens: response.data, user: req.user });
   } catch (error) {
     if (error instanceof NeedsLoginError) return redirectToLogin(req, res);
     console.error('Erro ao buscar personagens:', error.message);
     res.render('error', {
-      message: 'Erro ao Buscar Personagens / Error Fetching Characters',
+      message: 'Erro ao Buscar Personagens',
       error: { status: error.response?.status || 500, stack: error.message },
       user: req.user,
     });
@@ -45,7 +45,7 @@ router.get('/:id', async function (req, res) {
     if (error instanceof NeedsLoginError) return redirectToLogin(req, res);
     console.error('Erro ao buscar personagem:', error.message);
     res.render('error', {
-      message: 'Erro ao Buscar Personagem / Error Fetching Character',
+      message: 'Erro ao Buscar Personagem',
       error: { status: error.response?.status || 500, stack: error.message },
       user: req.user,
     });
@@ -68,8 +68,8 @@ router.post('/:id/pv', async function (req, res) {
     if (error instanceof NeedsLoginError) return redirectToLogin(req, res);
 
     const pvError = isInsufficientScope(error)
-      ? 'Seu token não tem a permissão "content.write" necessária para esta ação. / Your token lacks the "content.write" permission needed for this action.'
-      : `Erro ao atualizar PV (HTTP ${error.response?.status || '?'}). / Error updating HP (HTTP ${error.response?.status || '?'}).`;
+      ? 'Seu token não tem a permissão "content.write" necessária para esta ação.'
+      : `Erro ao atualizar PV (HTTP ${error.response?.status || '?'}).`;
 
     // Re-fetch the character so the page renders normally alongside the error banner.
     try {
@@ -88,7 +88,7 @@ router.post('/:id/pv', async function (req, res) {
       if (fetchError instanceof NeedsLoginError) return redirectToLogin(req, res);
       console.error('Erro ao buscar personagem após falha no PATCH:', fetchError.message);
       return res.render('error', {
-        message: 'Erro ao Atualizar PV / Error Updating HP',
+        message: 'Erro ao Atualizar PV',
         error: { status: error.response?.status || 500, stack: error.message },
         user: req.user,
       });

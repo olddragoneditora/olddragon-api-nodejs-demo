@@ -5,9 +5,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { 
-    title: 'Old Dragon API Example',
-    user: req.user 
+  res.render('index', {
+    title: 'Exemplo da API do Old Dragon',
+    user: req.user
   });
 });
 
@@ -20,7 +20,7 @@ router.get('/callback', function(req, res, next) {
     if (err) {
       console.error('Authentication Error:', err);
       return res.render('error', {
-        message: 'Erro de Autenticação / Authentication Error',
+        message: 'Erro de Autenticação',
         error: { status: 500, stack: err.message },
         user: req.user
       });
@@ -41,7 +41,7 @@ router.get('/callback', function(req, res, next) {
         const response = await apiRequest(req, { method: 'get', url: `${OLDDRAGON_BASE_URL}/campanhas.json` });
 
         res.render('success', {
-          title: 'Autenticação Realizada / Authentication Successful',
+          title: 'Autenticação Realizada',
           user: req.user,
           accessToken: req.user.accessToken,
           campanhas: response.data
@@ -50,7 +50,7 @@ router.get('/callback', function(req, res, next) {
         if (error instanceof NeedsLoginError) return redirectToLogin(req, res);
         console.error('Error fetching campanhas:', error.message);
         res.render('error', {
-          message: 'Erro ao Buscar Dados / Error Fetching Data',
+          message: 'Erro ao Buscar Dados',
           error: { status: error.response?.status || 500, stack: error.message },
           user: req.user
         });
