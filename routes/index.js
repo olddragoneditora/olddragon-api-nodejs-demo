@@ -41,7 +41,8 @@ router.get('/callback', function(req, res, next) {
         const response = await axios.get(`${OLDDRAGON_BASE_URL}/campanhas.json`, {
           headers: {
             Authorization: `Bearer ${req.user.accessToken}`,
-            'User-Agent': 'OldDragon-Example-App',
+            'User-Agent': 'OldDragon-Example-App (contact: oi@olddragon.com.br)',
+            Accept: 'application/json',
           },
         });
         
