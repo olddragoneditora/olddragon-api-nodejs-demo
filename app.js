@@ -23,9 +23,11 @@ passport.use(
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL: process.env.CALLBACK_URL || `http://localhost:8080/callback`,
-      scope: "openid email content.read offline_access",
+      scope: "openid email content.read content.write offline_access",
       prompt: "consent",
       scopeSeparator: " ",
+      state: true,
+      pkce: true,
     },
     (accessToken, refreshToken, profile, cb) => {
       profile.accessToken = accessToken;
