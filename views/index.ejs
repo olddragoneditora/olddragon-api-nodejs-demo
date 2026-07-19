@@ -6,14 +6,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simpledotcss/2.3.7/simple.min.css" integrity="sha512-taVA0VISClRMNshgWnlrG4lcEYSjwpgpI8vaoT0zGoPf9c74DA95SXMngcgjaWTrEsUbKmfKqmQ7toiXNc2l+A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
+    <%- include('partials/nav') %>
+
     <h1><%= title %></h1>
-    <p>Exemplo de integração com a API do Old Dragon usando OAuth 2.0</p>
+    <p>
+      Exemplo de integração com a API do Old Dragon usando OAuth 2.0 (login, personagens, campanhas).<br>
+      Example integration with the Old Dragon API using OAuth 2.0 (login, characters, campaigns).
+    </p>
 
     <% if (typeof user !== 'undefined' && user) { %>
-      <p>Usuário autenticado!</p>
-      <a href="/logout">Logout</a>
+      <p>Usuário autenticado! / You're logged in!</p>
+      <p><a href="/personagens">Ver meus personagens / See my characters</a></p>
     <% } else { %>
-      <a href="/login">Login com Old Dragon</a>
+      <a href="/login">Login com Old Dragon / Login with Old Dragon</a>
     <% } %>
   </body>
 </html>

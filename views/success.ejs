@@ -3,20 +3,19 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel="stylesheet" href="https://unpkg.com/simpledotcss@2.1.0/simple.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simpledotcss/2.3.7/simple.min.css" integrity="sha512-taVA0VISClRMNshgWnlrG4lcEYSjwpgpI8vaoT0zGoPf9c74DA95SXMngcgjaWTrEsUbKmfKqmQ7toiXNc2l+A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
+    <%- include('partials/nav', { user }) %>
+
     <h1><%= title %></h1>
-    
+
+    <p><a href="/personagens">Ver meus personagens / See my characters</a></p>
+
     <h2>Access Token</h2>
     <pre><%= accessToken %></pre>
-    
-    <h2>Campanhas do Usuário</h2>
+
+    <h2>Campanhas do Usuário / User's Campaigns</h2>
     <pre><%= JSON.stringify(campanhas, null, 2) %></pre>
-    
-    <p>
-      <a href="/">Voltar</a> | 
-      <a href="/logout">Logout</a>
-    </p>
   </body>
 </html>

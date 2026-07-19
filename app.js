@@ -8,11 +8,10 @@ var passport = require('passport');
 var OAuth2Strategy = require('passport-oauth2');
 
 var indexRouter = require('./routes/index');
+var personagensRouter = require('./routes/personagens');
+var { OLDDRAGON_BASE_URL } = require('./lib/oldDragonApi');
 
 var app = express();
-
-// OAuth2 Strategy configuration
-const OLDDRAGON_BASE_URL = process.env.OLDDRAGON_BASE_URL || "https://olddragon.com.br";
 
 passport.use(
   "oauth2",
@@ -65,6 +64,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', indexRouter);
+app.use('/personagens', personagensRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -76,6 +76,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.user = req.user;
 
   // render the error page
   res.status(err.status || 500);

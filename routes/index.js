@@ -1,6 +1,6 @@
 var express = require('express');
 var passport = require('passport');
-var axios = require('axios');
+var { OLDDRAGON_BASE_URL, apiRequest, NeedsLoginError, redirectToLogin } = require('../lib/oldDragonApi');
 var router = express.Router();
 
 /* GET home page. */
@@ -20,8 +20,9 @@ router.get('/callback', function(req, res, next) {
     if (err) {
       console.error('Authentication Error:', err);
       return res.render('error', {
-        message: 'Erro de Autenticação',
-        error: { status: 500, stack: err.message }
+        message: 'Erro de Autenticação / Authentication Error',
+        error: { status: 500, stack: err.message },
+        user: req.user
       });
     }
     
@@ -37,25 +38,21 @@ router.get('/callback', function(req, res, next) {
       }
 
       try {
-        const OLDDRAGON_BASE_URL = process.env.OLDDRAGON_BASE_URL || "https://olddragon.com.br";
-        const response = await axios.get(`${OLDDRAGON_BASE_URL}/campanhas.json`, {
-          headers: {
-            Authorization: `Bearer ${req.user.accessToken}`,
-            'User-Agent': 'OldDragon-Example-App (contact: oi@olddragon.com.br)',
-            Accept: 'application/json',
-          },
-        });
-        
+        const response = await apiRequest(req, { method: 'get', url: `${OLDDRAGON_BASE_URL}/campanhas.json` });
+
         res.render('success', {
-          title: 'Autenticação Realizada',
+          title: 'Autenticação Realizada / Authentication Successful',
+          user: req.user,
           accessToken: req.user.accessToken,
           campanhas: response.data
         });
       } catch (error) {
-        console.error('Error fetching campanhas:', error);
+        if (error instanceof NeedsLoginError) return redirectToLogin(req, res);
+        console.error('Error fetching campanhas:', error.message);
         res.render('error', {
-          message: 'Erro ao Buscar Dados',
-          error: { status: 500, stack: 'Erro ao buscar campanhas da API' }
+          message: 'Erro ao Buscar Dados / Error Fetching Data',
+          error: { status: error.response?.status || 500, stack: error.message },
+          user: req.user
         });
       }
     });

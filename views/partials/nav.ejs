@@ -1,0 +1,9 @@
+<nav>
+  <a href="/">Início / Home</a>
+  <% if (typeof user !== 'undefined' && user) { %>
+    | <a href="/personagens">Personagens / Characters</a>
+    | <a href="/logout">Sair / Logout</a>
+  <% } else { %>
+    | <a href="/login">Entrar / Login</a>
+  <% } %>
+</nav>
