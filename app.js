@@ -8,11 +8,16 @@ var passport = require('passport');
 var OAuth2Strategy = require('passport-oauth2');
 
 var indexRouter = require('./routes/index');
+var personagensRouter = require('./routes/personagens');
+var { OLDDRAGON_BASE_URL } = require('./lib/oldDragonApi');
 
 var app = express();
 
-// OAuth2 Strategy configuration
-const OLDDRAGON_BASE_URL = process.env.OLDDRAGON_BASE_URL || "https://olddragon.com.br";
+// Fly.io terminates TLS at its edge and forwards plain HTTP internally, so
+// Express must trust the X-Forwarded-Proto header to know the original
+// request was HTTPS -- required for secure session cookies (see below) to
+// ever get set in production.
+app.set('trust proxy', 1);
 
 passport.use(
   "oauth2",
@@ -50,7 +55,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Session configuration
+// Session configuration. Uses the default in-memory store: fine for this
+// single-machine teaching demo (short-lived OAuth tokens, not sensitive user
+// data), but not a pattern to copy for a real multi-instance deployment --
+// swap in a persistent store (Redis, Postgres, ...) there instead.
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "your-session-secret-change-this",
@@ -65,6 +73,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', indexRouter);
+app.use('/personagens', personagensRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -76,6 +85,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.user = req.user;
 
   // render the error page
   res.status(err.status || 500);

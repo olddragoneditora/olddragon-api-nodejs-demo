@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simpledotcss/2.3.7/simple.min.css" integrity="sha512-taVA0VISClRMNshgWnlrG4lcEYSjwpgpI8vaoT0zGoPf9c74DA95SXMngcgjaWTrEsUbKmfKqmQ7toiXNc2l+A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <%- include('../partials/nav', { user }) %>
+
+    <p><a href="/personagens">&larr; Personagens / Characters</a></p>
+
+    <h1><%= personagem.name %></h1>
+    <p>
+      Detalhe do personagem (<code>GET /personagens/<%= personagem.id %>.json</code>).<br>
+      Character detail (<code>GET /personagens/<%= personagem.id %>.json</code>).
+    </p>
+
+    <ul>
+      <li>Nível / Level: <strong><%= personagem.level %></strong></li>
+      <li>Classe / Class: <strong><%= personagem.character_class.name %></strong></li>
+      <li>Raça / Race: <strong><%= personagem.character_race.name %></strong></li>
+      <li>Campanha / Campaign: <strong><%= personagem.campaign ? personagem.campaign.name : '-' %></strong></li>
+      <li>Classe de Armadura / Armor Class (CA): <strong><%= personagem.ac %></strong></li>
+      <li>Experiência / Experience (XP): <strong><%= personagem.experience_points %></strong></li>
+      <li>PV atual / total (HP current / max): <strong><%= personagem.health_points %> / <%= personagem.max_hp %></strong></li>
+    </ul>
+
+    <% if (pvSuccess) { %>
+      <p class="notice">PV atualizado com sucesso! / HP updated successfully!</p>
+    <% } %>
+    <% if (pvError) { %>
+      <p class="notice notice-error"><%= pvError %></p>
+    <% } %>
+
+    <h2>Atualizar PV / Update HP</h2>
+    <p>
+      Envia um <code>PATCH /personagens/<%= personagem.id %>.json</code> para a API (requer o escopo <code>content.write</code>).<br>
+      Sends a <code>PATCH /personagens/<%= personagem.id %>.json</code> to the API (requires the <code>content.write</code> scope).
+    </p>
+    <form method="POST" action="/personagens/<%= personagem.id %>/pv">
+      <label for="health_points">PV atual / Current HP (0-<%= personagem.max_hp %>)</label>
+      <input type="number" id="health_points" name="health_points" min="0" max="<%= personagem.max_hp %>" value="<%= personagem.health_points %>" required>
+      <button type="submit">Atualizar / Update</button>
+    </form>
+  </body>
+</html>

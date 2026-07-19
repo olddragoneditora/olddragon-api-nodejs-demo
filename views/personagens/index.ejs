@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simpledotcss/2.3.7/simple.min.css" integrity="sha512-taVA0VISClRMNshgWnlrG4lcEYSjwpgpI8vaoT0zGoPf9c74DA95SXMngcgjaWTrEsUbKmfKqmQ7toiXNc2l+A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <%- include('../partials/nav', { user }) %>
+
+    <h1>Personagens / Characters</h1>
+    <p>
+      Lista dos personagens do usuário autenticado (<code>GET /personagens.json</code>).<br>
+      List of the authenticated user's characters (<code>GET /personagens.json</code>).
+    </p>
+
+    <% if (personagens.length === 0) { %>
+      <p>Nenhum personagem encontrado. / No characters found.</p>
+    <% } else { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Nome / Name</th>
+            <th>Nível / Level</th>
+            <th>Classe / Class</th>
+            <th>Raça / Race</th>
+            <th>Campanha / Campaign</th>
+            <th>PV / HP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% personagens.forEach(function(personagem) { %>
+            <tr>
+              <td><a href="/personagens/<%= personagem.id %>"><%= personagem.name %></a></td>
+              <td><%= personagem.level %></td>
+              <td><%= personagem.character_class.name %></td>
+              <td><%= personagem.character_race.name %></td>
+              <td><%= personagem.campaign ? personagem.campaign.name : '-' %></td>
+              <td><%= personagem.health_points %> / <%= personagem.max_hp %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </body>
+</html>
